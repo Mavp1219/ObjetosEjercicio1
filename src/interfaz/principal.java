@@ -5,6 +5,8 @@
  */
 package interfaz;
 
+import clases.*;
+
 /**
  *
  * @author user
@@ -34,7 +36,7 @@ public class principal extends javax.swing.JFrame {
         txtnumerador1 = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
         txtdenominador1 = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cmboperaciones = new javax.swing.JComboBox<>();
         txtnumerador2 = new javax.swing.JTextField();
         txtdenominador2 = new javax.swing.JTextField();
         jSeparator2 = new javax.swing.JSeparator();
@@ -55,21 +57,21 @@ public class principal extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel1.setText("OPERACIONES CON FRACCIONARIOS Y MIXTO");
         jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(78, 10, 270, 30));
-        jPanel2.add(txtnumerador1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 90, 20));
+        jPanel2.add(txtnumerador1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 90, 30));
         jPanel2.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 90, 10));
-        jPanel2.add(txtdenominador1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 90, 20));
+        jPanel2.add(txtdenominador1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 90, 30));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Suma", "Resta", "Multiplicación", "División", " " }));
-        jPanel2.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 80, 110, 30));
-        jPanel2.add(txtnumerador2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 70, 90, 20));
-        jPanel2.add(txtdenominador2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 110, 90, 20));
+        cmboperaciones.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Suma", "Resta", "Multiplicación", "División", " " }));
+        jPanel2.add(cmboperaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 80, 110, 30));
+        jPanel2.add(txtnumerador2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 60, 90, 30));
+        jPanel2.add(txtdenominador2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 110, 90, 30));
         jPanel2.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 100, 90, 10));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel2.setText("=");
         jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 90, 20, 20));
-        jPanel2.add(txtnumerador3, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 70, 90, 20));
-        jPanel2.add(txtdenominador3, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 110, 90, 20));
+        jPanel2.add(txtnumerador3, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 60, 90, 30));
+        jPanel2.add(txtdenominador3, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 110, 90, 30));
         jPanel2.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 100, 90, 10));
 
         cmdcalcular.setText("Calcular");
@@ -96,7 +98,35 @@ public class principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cmdcalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdcalcularActionPerformed
-        // TODO add your handling code here:
+         int op,num, num2, num3, den, den2, den3;
+         Fraccionario f1, f2, f3=null;
+         
+         op = cmboperaciones.getSelectedIndex();
+         num = Integer.parseInt(txtnumerador1.getText());
+         num2 = Integer.parseInt(txtnumerador2.getText());
+         den = Integer.parseInt(txtdenominador1.getText());
+         den2 = Integer.parseInt(txtdenominador2.getText());
+         
+         
+         f1= new Fraccionario(num, den);
+         f2= new Fraccionario(num2, den2);
+         
+         switch(op){
+             case 0: 
+                 f3 = f1.sumar(f2);
+                 break;
+             case 1:
+                 f3 = f1.restar(f2);
+                 break;
+             case 2: 
+                 f3 = f1.multiplicar(f2);
+                 break;
+             case 3:
+                 f3 = f1.dividir(f2);
+                 break;
+         }
+         txtnumerador3.setText(""+ f3.getNumerador());
+         txtdenominador3.setText("" + f3.getDenominador());
     }//GEN-LAST:event_cmdcalcularActionPerformed
 
     private void cmdlimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdlimpiarActionPerformed
@@ -146,9 +176,9 @@ public class principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> cmboperaciones;
     private javax.swing.JButton cmdcalcular;
     private javax.swing.JButton cmdlimpiar;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
