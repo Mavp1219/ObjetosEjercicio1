@@ -6,6 +6,7 @@
 package interfaz;
 
 import clases.*;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -71,11 +72,29 @@ public class principal extends javax.swing.JFrame {
         });
         jPanel2.add(txtnumerador1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 90, 30));
         jPanel2.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 90, 10));
+
+        txtdenominador1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtdenominador1KeyTyped(evt);
+            }
+        });
         jPanel2.add(txtdenominador1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 90, 30));
 
         cmboperaciones.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Suma", "Resta", "Multiplicación", "División" }));
         jPanel2.add(cmboperaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 80, 110, 30));
+
+        txtnumerador2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtnumerador2KeyTyped(evt);
+            }
+        });
         jPanel2.add(txtnumerador2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 60, 90, 30));
+
+        txtdenominador2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtdenominador2KeyTyped(evt);
+            }
+        });
         jPanel2.add(txtdenominador2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 110, 90, 30));
         jPanel2.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 100, 90, 10));
 
@@ -131,62 +150,151 @@ public class principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cmdcalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdcalcularActionPerformed
-         int op,num, num2, num3, den, den2, den3, mixto1=0;
-         Fraccionario f1, f2, f3=null, f4, f5=null, mixto;
-         
-         op = cmboperaciones.getSelectedIndex();
-         num = Integer.parseInt(txtnumerador1.getText());
-         num2 = Integer.parseInt(txtnumerador2.getText());
-         den = Integer.parseInt(txtdenominador1.getText());
-         den2 = Integer.parseInt(txtdenominador2.getText());
-         
-         
-         f1= new Fraccionario(num, den,1);
-         f2= new Fraccionario(num2, den2,1);
-         
-         switch(op){
-             case 0: 
-                 f3 = f1.sumar(f2);
-                 break;
-             case 1:
-                 f3 = f1.restar(f2);
-                 break;
-             case 2: 
-                 f3 = f1.multiplicar(f2);
-                 break;
-             case 3:
-                 f3 = f1.dividir(f2);
-                 break;
-         }
-         txtnumerador3.setText(""+ f3.getNumerador());
-         txtdenominador3.setText("" + f3.getDenominador());
-         
-            num3= f3.getNumerador();
-            den3= f3.getDenominador();
-            f4= new Fraccionario(num3, den3, mixto1);
-            f5= f3.convertir(f4);
+        int op, num, num2, num3, den, den2, den3, mixto1 = 0, sw=1;
+        Fraccionario f1, f2, f3 = null, f4, f5 = null, mixto;
+
+        if (txtnumerador1.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor llene el numerador", "Error", JOptionPane.ERROR_MESSAGE);
+            txtnumerador1.requestFocusInWindow();
+            txtnumerador1.selectAll();
+            sw = 0;
+        } else if (txtdenominador1.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor llene el denominador", "Error", JOptionPane.ERROR_MESSAGE);
+            txtdenominador1.requestFocusInWindow();
+            txtdenominador1.selectAll();;
+            sw = 0;
+        } else if (txtnumerador2.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor llene el numerador 2", "Error", JOptionPane.ERROR_MESSAGE);
+            txtnumerador2.requestFocusInWindow();
+            txtdenominador1.selectAll();
+            sw = 0;
+        } else if (txtdenominador2.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor llene el numerador 2", "Error", JOptionPane.ERROR_MESSAGE);
+            txtdenominador2.requestFocusInWindow();
+            txtdenominador2.selectAll();
+            sw = 0;
+        } else if (Integer.parseInt(txtdenominador1.getText().trim()) == 0) {
+            JOptionPane.showMessageDialog(this, "No se acepta el denominador 0", "Error", JOptionPane.ERROR_MESSAGE);
+            txtdenominador1.requestFocusInWindow();
+            txtdenominador1.selectAll();
+            sw = 0;
+        } else if (Integer.parseInt(txtdenominador2.getText().trim()) == 0) {
+            JOptionPane.showMessageDialog(this, "No se acepta el denominador 0", "Error", JOptionPane.ERROR_MESSAGE);
+            txtdenominador2.requestFocusInWindow();
+            txtdenominador2.selectAll();
+            sw = 0;
+        } else {
+
+            try{
+            num = Integer.parseInt(txtnumerador1.getText());
+            }catch(Exception e){
+                JOptionPane.showMessageDialog(this, "Escriba bien el numerador","Error", JOptionPane.ERROR_MESSAGE);
+                txtnumerador1.requestFocusInWindow();
+                txtnumerador1.selectAll();
+                sw = 0;
+            }
+            try{
+            num2 = Integer.parseInt(txtnumerador2.getText());
+            }catch(Exception e){
+                JOptionPane.showMessageDialog(this, "Escriba bien el numerador 2","Error", JOptionPane.ERROR_MESSAGE);
+                txtnumerador2.requestFocusInWindow();
+                txtnumerador2.selectAll();
+                sw = 0;
+            }
+            try{
+            den = Integer.parseInt(txtdenominador1.getText());
+            }catch(Exception e){
+                JOptionPane.showMessageDialog(this, "Escriba bien el denominador","Error", JOptionPane.ERROR_MESSAGE);
+                txtdenominador1.requestFocusInWindow();
+                txtdenominador1.selectAll();
+                sw = 0;
+            }
             
-            txtnumerador4.setText(""+ f5.getNumerador());
-            txtdenominador4.setText(""+f5.getDenominador());
-            txtm.setText(""+f5.getMixto());
+            try{
+            den2 = Integer.parseInt(txtdenominador2.getText());
+            }catch(Exception e){
+                JOptionPane.showMessageDialog(this, "Escriba bien el denominador 2","Error", JOptionPane.ERROR_MESSAGE);
+                txtdenominador2.requestFocusInWindow();
+                txtdenominador2.selectAll();
+                sw = 0;
+            } 
+        }
+        
+        if (sw == 1){
+            op = cmboperaciones.getSelectedIndex();
+            num = Integer.parseInt(txtnumerador1.getText());
+            num2 = Integer.parseInt(txtnumerador2.getText());
+            den = Integer.parseInt(txtdenominador1.getText());
+            den2 = Integer.parseInt(txtdenominador2.getText());
+
+            f1 = new Fraccionario(num, den, 1);
+            f2 = new Fraccionario(num2, den2, 1);
+
+                switch (op) {
+                    case 0:
+                        f3 = f1.sumar(f2);
+                        break;
+                    case 1:
+                        f3 = f1.restar(f2);
+                        break;
+                    case 2:
+                        f3 = f1.multiplicar(f2);
+                        break;
+                    case 3:
+                        f3 = f1.dividir(f2);
+                        break;
+                }
+                txtnumerador3.setText("" + f3.getNumerador());
+                txtdenominador3.setText("" + f3.getDenominador());
+ 
+            if (f3.getNumerador() <= f3.getDenominador()) {
+                JOptionPane.showMessageDialog(this, "Si el numerador es menor al denominador no se puede operar", "Error", JOptionPane.ERROR_MESSAGE);
+                txtm.setText("");
+                txtnumerador4.setText("");
+                txtdenominador4.setText("");
+
+            } else {
+                num3 = f3.getNumerador();
+                den3 = f3.getDenominador();
+                f4 = new Fraccionario(num3, den3, mixto1);
+                f5 = f3.convertir(f4);
+
+                txtnumerador4.setText("" + f5.getNumerador());
+                txtdenominador4.setText("" + f5.getDenominador());
+                txtm.setText("" + f5.getMixto());
+            }
+        }
     }//GEN-LAST:event_cmdcalcularActionPerformed
 
     private void cmdlimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdlimpiarActionPerformed
-      txtnumerador1.setText("");
-      txtnumerador2.setText("");
-      txtnumerador3.setText("");
-      txtnumerador4.setText("");
-      txtdenominador1.setText("");
-      txtdenominador2.setText("");
-      txtdenominador3.setText("");
-      txtdenominador4.setText("");
-      txtnumerador1.requestFocusInWindow();
-      
+        txtnumerador1.setText("");
+        txtnumerador2.setText("");
+        txtnumerador3.setText("");
+        txtnumerador4.setText("");
+        txtdenominador1.setText("");
+        txtdenominador2.setText("");
+        txtdenominador3.setText("");
+        txtdenominador4.setText("");
+        txtm.setText("");
+        txtnumerador1.requestFocusInWindow();
+
     }//GEN-LAST:event_cmdlimpiarActionPerformed
 
     private void txtnumerador1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtnumerador1KeyTyped
-
+      
     }//GEN-LAST:event_txtnumerador1KeyTyped
+
+    private void txtdenominador1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtdenominador1KeyTyped
+     
+    }//GEN-LAST:event_txtdenominador1KeyTyped
+
+    private void txtnumerador2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtnumerador2KeyTyped
+      
+    }//GEN-LAST:event_txtnumerador2KeyTyped
+
+    private void txtdenominador2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtdenominador2KeyTyped
+
+    }//GEN-LAST:event_txtdenominador2KeyTyped
 
     /**
      * @param args the command line arguments
