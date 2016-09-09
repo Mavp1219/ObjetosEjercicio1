@@ -11,14 +11,15 @@ package clases;
  */
 public class Fraccionario {
 
-    int numerador;
-    int denominador;
-    int mixto;
+    private int numerador;
+    private int denominador;
 
-    public Fraccionario(int numerador, int denominador,int mixto) {
+    public Fraccionario(int numerador, int denominador,int mixto) throws DenominadorCeroException{
         this.numerador = numerador;
         this.denominador = denominador;
-        this.mixto = mixto;
+        if( denominador == 0){
+      throw new DenominadorCeroException();
+        }
     }
 
     public int getNumerador() {
@@ -29,9 +30,6 @@ public class Fraccionario {
         return denominador;
     }
     
-    public int getMixto(){
-        return mixto;
-    }
 
     public void setNumerador(int numerador) {
         this.numerador = numerador;
@@ -41,11 +39,8 @@ public class Fraccionario {
         this.denominador = denominador;
     }
     
-    public void setMixto(int mixto){
-        this.mixto = mixto;
-    }
 
-    public Fraccionario sumar(Fraccionario f2) {
+    public Fraccionario sumar(Fraccionario f2) throws DenominadorCeroException{
         Fraccionario f;
         int num, den;
 
@@ -55,7 +50,7 @@ public class Fraccionario {
         return f;
     }
 
-    public Fraccionario restar(Fraccionario f2) {
+    public Fraccionario restar(Fraccionario f2) throws DenominadorCeroException{
         Fraccionario f;
         int num, den;
 
@@ -66,7 +61,7 @@ public class Fraccionario {
     }
 
     
-    public Fraccionario multiplicar(Fraccionario f2){
+    public Fraccionario multiplicar(Fraccionario f2) throws DenominadorCeroException{
         Fraccionario f;
         int num, den;
         
@@ -77,7 +72,7 @@ public class Fraccionario {
     }
     
     
-    public Fraccionario dividir(Fraccionario f2){
+    public Fraccionario dividir(Fraccionario f2) throws DenominadorCeroException{
         Fraccionario f;
         int num, den;
         
@@ -86,17 +81,6 @@ public class Fraccionario {
         f = new Fraccionario(num, den, 1);
         return f;
     }
-    
-    
-    public Fraccionario convertir(Fraccionario f4){
-        Fraccionario f;
-    int num, den,num2,den2, mixto;
-    num= f4.numerador%f4.denominador;
-    den= f4.denominador;
-    mixto= f4.numerador/f4.denominador;
-    
-    f= new Fraccionario (num, den, mixto);
-    return f;
-    }
+   
     
 }
